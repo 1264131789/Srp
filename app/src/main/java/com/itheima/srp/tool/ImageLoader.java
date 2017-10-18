@@ -21,9 +21,9 @@ import java.util.concurrent.Executors;
 
 public class ImageLoader {
     //图片缓存
-//    LruCache<String,Bitmap> mImageCache;
+//    LruCache<String,Bitmap> mMemoryCache;
     //内存缓存
-    ImageCache mImageCache = new ImageCache();
+    MemoryCache mMemoryCache = new MemoryCache();
     //sd卡缓存
     DiskCache mDiskCache = new DiskCache();
     //双缓存
@@ -53,7 +53,7 @@ public class ImageLoader {
         final int maxMemory = (int) Runtime.getRuntime().maxMemory();
         //取最大内存的1/4作为缓存
         final int cacheSize=maxMemory/4;
-        mImageCache=new LruCache<String, Bitmap>(cacheSize){
+        mMemoryCache=new LruCache<String, Bitmap>(cacheSize){
             @Override
             protected int sizeOf(String key, Bitmap bitmap) {
                 return bitmap.getRowBytes()*bitmap.getHeight()/1024;
@@ -62,14 +62,14 @@ public class ImageLoader {
     }*/
 
     public void displayImage(final String url, final ImageView imageView) {
-//        Bitmap bitmap = isUseDiskCache ? mDiskCache.get(url) : mImageCache.get(url);
+//        Bitmap bitmap = isUseDiskCache ? mDiskCache.get(url) : mMemoryCache.get(url);
         Bitmap bitmap=null;
         if (isUseDiskCache){
             bitmap=mDiskCache.get(url);
         }else if (isUseDoubleCache){
             bitmap=mDoubleCache.get(url);
         }else {
-            bitmap=mImageCache.get(url);
+            bitmap= mMemoryCache.get(url);
         }
         if (bitmap != null) {
             imageView.setImageBitmap(bitmap);
@@ -86,7 +86,7 @@ public class ImageLoader {
                 if (imageView.getTag().equals(url)) {
                     imageView.setImageBitmap(bitmap);
                 }
-                mImageCache.put(url, bitmap);
+                mMemoryCache.put(url, bitmap);
             }
         });
     }

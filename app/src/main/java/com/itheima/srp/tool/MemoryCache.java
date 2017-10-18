@@ -3,7 +3,7 @@ package com.itheima.srp.tool;
 /*
  *  @项目名：  Srp 
  *  @包名：    com.itheima.srp.tool
- *  @文件名:   ImageCache
+ *  @文件名:   MemoryCache
  *  @创建者:   shenbinjian
  *  @创建时间:  2017/9/13 19:25
  *  @描述：    TODO
@@ -12,9 +12,9 @@ package com.itheima.srp.tool;
 import android.graphics.Bitmap;
 import android.util.LruCache;
 
-public class ImageCache {
+public class MemoryCache {
     LruCache<String,Bitmap> mImageCache;
-    public ImageCache(){
+    public MemoryCache(){
         initImageCache();
     }
 

@@ -12,10 +12,10 @@ package com.itheima.srp.tool;
 import android.graphics.Bitmap;
 
 public class DoubleCache {
-    ImageCache mImageCache=new ImageCache();
+    MemoryCache mMemoryCache =new MemoryCache();
     DiskCache mDiskCache=new DiskCache();
     public Bitmap get(String url){
-        Bitmap bitmap = mImageCache.get(url);
+        Bitmap bitmap = mMemoryCache.get(url);
         if (bitmap==null){
             bitmap=mDiskCache.get(url);
         }
@@ -23,7 +23,7 @@ public class DoubleCache {
     }
 
     public void put(String url,Bitmap bitmap){
-        mImageCache.put(url,bitmap);
+        mMemoryCache.put(url,bitmap);
         mDiskCache.put(url,bitmap);
     }
 
