@@ -18,7 +18,9 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         ImageView ivSrp = (ImageView) findViewById(R.id.iv_srp);
         ImageLoader imageLoader = new ImageLoader();
-        ivSrp.setImageResource(R.mipmap.ic_launcher);
-        imageLoader.displayImage("http://192.168.0.112:8080/imgs/sunny.jpg",ivSrp);
+//        ivSrp.setImageResource(R.mipmap.ic_launcher);
+//        imageLoader.useDiskCache(true);
+        imageLoader.useDoubleCache(true);
+        imageLoader.displayImage("http://192.168.127.2:8080/imgs/sunny.jpg",ivSrp);
     }
 }
